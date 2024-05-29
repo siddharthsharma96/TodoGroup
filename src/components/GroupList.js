@@ -26,16 +26,26 @@ const GroupList = () => {
   }, [groups]);
 
   useEffect(() => {
-    for (let i = 1; i < groups.length; i++) {
-      const prevTo = parseInt(groups[i - 1].to);
-      const currentFrom = parseInt(groups[i].from);
-
-      if (currentFrom !== prevTo + 1) {
+    if (groups.length > 0) {
+      if (groups[0].from !== 1) {
         setError(true);
-        setMsg(`Error: Group ${i + 1} should start from ${prevTo + 1}`);
+        setMsg(`Error: Group 1 should start from 1`);
         return;
       }
+
+      for (let i = 1; i < groups.length; i++) {
+        const prevTo = parseInt(groups[i - 1].to);
+        const currentFrom = parseInt(groups[i].from);
+
+        if (currentFrom !== prevTo + 1) {
+          setError(true);
+          setMsg(`Error: Group ${i + 1} should start from ${prevTo + 1}`);
+          return;
+        }
+      }
+      // If all checks passed, clear the error
       setError(false);
+      setMsg("");
     }
   }, [groups]);
 
