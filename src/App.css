@@ -114,3 +114,19 @@
 .todoStatus::-webkit-scrollbar {
   height: 3px;
 }
+@media screen and (min-width: 360px) and (max-width: 1160px) {
+.todoListItem{
+  flex-direction: column;
+  gap: 0;
+
+}
+.todo{
+  margin-bottom: 10px;
+  width: 60%;
+}
+.todoStatus{
+  min-width: 70%;
+  max-width: 70%;
+  margin-left: 20px;
+}
+}
