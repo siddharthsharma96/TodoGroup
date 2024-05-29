@@ -31,9 +31,10 @@
   margin-bottom: 10px;
 }
 .todo {
+  height: 40px;
   display: flex;
   align-items: baseline;
-  width: 18%;
+  width: 20%;
 }
 
 .trash {
@@ -61,7 +62,7 @@
 }
 
 .todo > div > input {
-  width: 19px;
+  width: 28px;
   padding: 5px 7px;
   height: 100%;
   text-align: center;
@@ -86,7 +87,9 @@
 }
 .todoStatus {
   min-width: 50%;
+  max-width: 50%; 
   display: flex;
+  height: 40px;
   gap: 6px;
   color: #a8b2bc;
   border: 1px solid #d3d3d3;
@@ -95,4 +98,19 @@
   background-color: #f8f9fa;
   padding-left: 10px;
   padding-right: 20px;
+  overflow-x: auto; 
+  white-space: nowrap; 
+  overflow-y: hidden;
+}
+.todoStatus::-webkit-scrollbar-thumb {
+  background-color: #3362fa;
+  border: 1px solid #3362fa;
+  border-radius: 4px;
+  background-clip: padding-box;  
+  width: 0;
+  scrollbar-width: 1px;
+}
+
+.todoStatus::-webkit-scrollbar {
+  height: 3px;
 }
