@@ -130,7 +130,12 @@ const GroupList = () => {
       <p className="addGroup" onClick={handleAddGroup}>
         + Add Group
       </p>
-      <button onClick={handleShowStatus} disabled={error}>
+      <button
+        onClick={handleShowStatus}
+        disabled={
+          error && msg !== "Cannot add more groups outside the range 1-10."
+        }
+      >
         Show Status
       </button>
     </div>
