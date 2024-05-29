@@ -43,7 +43,7 @@ const GroupList = () => {
           return;
         }
       }
-      // If all checks passed, clear the error
+
       setError(false);
       setMsg("");
     }
