@@ -8,7 +8,7 @@
   color: #3362fa;
   margin-left: 40px;
 }
-.todoConatiner > p {
+.addGroup  {
   color: #3362fa;
   cursor: pointer;
   font-size: 14px ;
@@ -58,7 +58,7 @@
 }
 .errorMsg{
   font-size: 12px;
-
+color: red;
 }
 
 .todo > div > input {
@@ -71,6 +71,11 @@
   height: 100%;
   font-size: 16px;
   outline: none;
+}
+.tick{
+  height: 12px;
+  width: 12px;
+  fill: rgb(94, 239, 125);
 }
 .arrow {
   width: 15px;
@@ -91,6 +96,7 @@
   display: flex;
   height: 40px;
   gap: 6px;
+  justify-content: space-between;
   color: #a8b2bc;
   border: 1px solid #d3d3d3;
   border-radius: 4px;
@@ -101,6 +107,10 @@
   overflow-x: auto; 
   white-space: nowrap; 
   overflow-y: hidden;
+}
+.todoStatus>div{
+display: flex;
+gap: 8px;
 }
 .todoStatus::-webkit-scrollbar-thumb {
   background-color: #3362fa;
@@ -136,13 +146,17 @@
   gap: 0;
 
 }
+.todoStatus>div{
+
+gap: 2px;
+}
 .todo{
   margin-bottom: 10px;
   width: 100%;
 }
 .todoStatus{
-  min-width: 80%;
-  max-width: 80%;
+  min-width: 90%;
+  max-width: 90%;
   margin-left: 20px;
 }
 .todoConatiner {
@@ -151,4 +165,13 @@
 .Conatiner {
   margin: 30px 2%;
 }
+}
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
 }

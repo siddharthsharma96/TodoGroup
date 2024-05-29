@@ -16,7 +16,7 @@ const GroupList = () => {
       const updatedGroups = groups.map((group, index) => {
         if (index !== 0 && group.to === null) {
           const prevTo = groups[index - 1].to;
-          return { ...group, to: prevTo + 5 };
+          return { ...group, to: Math.min(prevTo + 5, 10) };
         }
         return group;
       });
@@ -40,17 +40,23 @@ const GroupList = () => {
   }, [groups]);
 
   const handleAddGroup = useCallback(() => {
-    let newGroup;
     if (groups.length === 0) {
-      newGroup = { id: Date.now(), from: 1, to: 5, status: null };
-    } else {
-      const lastGroup = groups[groups.length - 1];
-      const lastTo = parseInt(lastGroup.to);
-      const newFrom = lastTo + 1;
-      const newTo = newFrom + 4;
-      newGroup = { id: Date.now(), from: newFrom, to: newTo, status: null };
+      setGroups([{ id: Date.now(), from: 1, to: 5, status: null }]);
+      return;
     }
 
+    const lastGroup = groups[groups.length - 1];
+    const lastTo = parseInt(lastGroup.to);
+    const newFrom = lastTo + 1;
+    const newTo = Math.min(newFrom + 4, 10);
+
+    if (newFrom > 10) {
+      setError(true);
+      setMsg("Cannot add more groups outside the range 1-10.");
+      return;
+    }
+
+    const newGroup = { id: Date.now(), from: newFrom, to: newTo, status: null };
     setGroups((prevGroups) => [...prevGroups, newGroup]);
   }, [groups]);
 
@@ -59,10 +65,41 @@ const GroupList = () => {
   }, []);
 
   const handleChangeGroup = useCallback((id, field, value) => {
+    const numValue = parseInt(value);
+    if (numValue < 1 || numValue > 10) {
+      setError(true);
+      setMsg("Values must be between 1 and 10.");
+      return;
+    }
+
     setGroups((prevGroups) =>
-      prevGroups.map((group) =>
-        group.id === id ? { ...group, [field]: value } : group
-      )
+      prevGroups.map((group) => {
+        if (group.id === id) {
+          const updatedGroup = { ...group, [field]: numValue };
+
+          if (
+            field === "from" &&
+            (numValue >= updatedGroup.to || numValue < 1)
+          ) {
+            setError(true);
+            setMsg("Invalid 'from' value.");
+            return group;
+          }
+
+          if (
+            field === "to" &&
+            (numValue <= updatedGroup.from || numValue > 10)
+          ) {
+            setError(true);
+            setMsg("Invalid 'to' value.");
+            return group;
+          }
+
+          setError(false);
+          return updatedGroup;
+        }
+        return group;
+      })
     );
   }, []);
 
@@ -90,8 +127,12 @@ const GroupList = () => {
         />
       ))}
       {error && <p className="errorMsg">{msg}</p>}
-      <p onClick={handleAddGroup}>+ Add Group</p>
-      <button onClick={handleShowStatus}>Show Status</button>
+      <p className="addGroup" onClick={handleAddGroup}>
+        + Add Group
+      </p>
+      <button onClick={handleShowStatus} disabled={error}>
+        Show Status
+      </button>
     </div>
   );
 };
